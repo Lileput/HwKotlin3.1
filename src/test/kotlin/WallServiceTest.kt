@@ -37,6 +37,6 @@ class WallServiceTest {
 
   val result = service.update(post)
 
-  assertEquals(false, re)
+  assertEquals(false, result)
  }
 }
