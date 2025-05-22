@@ -4,6 +4,10 @@ fun main() {
 
 }
 
+abstract class Attachment(val type: String) {
+
+}
+
 data class Post (
     val postId: Int = 0,
     val ownerId: Int?,
@@ -15,7 +19,8 @@ data class Post (
     val canDelete : Boolean = false,
     val canEdit: Boolean = false,
     val markedAsAds: Boolean = false,
-    val likes: Likes = Likes()
+    val likes: Likes = Likes(),
+    val attachments: Array<Attachment>?
 )
 
 data class Likes(
@@ -24,6 +29,51 @@ data class Likes(
     val canLik: Boolean = true,
     val canPublish: Boolean = true
 )
+
+data class Photo(
+    val id: Int,
+    val albumId: Int,
+    val ownerId: Int,
+    val photo130: String,
+    val photo604: String?
+)
+
+data class Video(
+    val id: Int,
+    val ownerId: Int,
+    val title: String,
+    val description: String,
+    val duration: Int,
+    val image: String
+)
+
+data class Audio(
+    val id: Int,
+    val ownerId: Int,
+    val artist: String,
+    val title: String,
+    val duration: Int
+)
+
+data class Link(
+    val url: String,
+    val title: String,
+    val description: String
+)
+
+data class Document(
+    val id: Int,
+    val ownerId: Int,
+    val title: String,
+    val size: Int,
+    val ext: String
+)
+
+class PhotoAttachment(val photo: Photo) : Attachment("photo")
+class VideoAttachment(val video: Video) : Attachment("video")
+class AudioAttachment(val audio: Audio) : Attachment("audio")
+class LinkAttachment(val link: Link) : Attachment("link")
+class DocumentAttachment(val document: Document) : Attachment("doc")
 
 object WallService {
 

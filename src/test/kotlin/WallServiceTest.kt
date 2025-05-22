@@ -6,37 +6,49 @@ import org.junit.Test
 import kotlin.test.assertEquals
 
 class WallServiceTest {
- @Before
- fun clearBeforeTest() {
-  WallService.clear()
- }
- @Test
- fun add() {
-  val service = WallService
-  val post = Post(ownerId = 1, fromId = 1, date = 13052025, text = "First post", postType = "post")
+    @Before
+    fun clearBeforeTest() {
+        WallService.clear()
+    }
 
-  val addedPost = service.add(post)
+    @Test
+    fun add() {
+        val service = WallService
+        val post =
+            Post(ownerId = 1, fromId = 1, date = 13052025, text = "First post", postType = "post", attachments = null)
 
-  assertNotEquals(0, addedPost.postId)
- }
- @Test
- fun updateIsTrue() {
-  val service = WallService
-  val post1 = Post(ownerId = 1, fromId = 1, date = 13052025, text = "Second post", postType = "post")
-  val addedPost = service.add(post1)
-  val updatePost = addedPost.copy(text = "Update post")
-  val result = service.update(updatePost)
+        val addedPost = service.add(post)
 
-  assertEquals(true, result)
- }
+        assertNotEquals(0, addedPost.postId)
+    }
 
- @Test
- fun updateIsFalse() {
-  val service = WallService
-  val post = Post(postId = 200 ,ownerId = 1, fromId = 1, date = 13052025, text = "Second post", postType = "post")
+    @Test
+    fun updateIsTrue() {
+        val service = WallService
+        val post1 =
+            Post(ownerId = 1, fromId = 1, date = 13052025, text = "Second post", postType = "post", attachments = null)
+        val addedPost = service.add(post1)
+        val updatePost = addedPost.copy(text = "Update post")
+        val result = service.update(updatePost)
 
-  val result = service.update(post)
+        assertEquals(true, result)
+    }
 
-  assertEquals(false, result)
- }
+    @Test
+    fun updateIsFalse() {
+        val service = WallService
+        val post = Post(
+            postId = 200,
+            ownerId = 1,
+            fromId = 1,
+            date = 13052025,
+            text = "Second post",
+            postType = "post",
+            attachments = null
+        )
+
+        val result = service.update(post)
+
+        assertEquals(false, result)
+    }
 }
