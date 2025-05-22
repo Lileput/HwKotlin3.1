@@ -6,10 +6,10 @@ fun main() {
 
 data class Post (
     val postId: Int = 0,
-    val ownerId: Int,
+    val ownerId: Int?,
     val fromId: Int,
     val date: Int,
-    val text: String,
+    val text: String?,
     val postType : String,
     val friendsOnly: Boolean = false,
     val canDelete : Boolean = false,
