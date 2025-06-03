@@ -118,6 +118,8 @@ object WallService {
     fun clear() {
         posts = emptyArray()
         nextId = 1
+        comments = emptyArray()
+        commentId = 1
     }
 }
 
