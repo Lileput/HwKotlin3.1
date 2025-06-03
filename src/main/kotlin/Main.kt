@@ -20,7 +20,14 @@ data class Post (
     val canEdit: Boolean = false,
     val markedAsAds: Boolean = false,
     val likes: Likes = Likes(),
-    val attachments: Array<Attachment>?
+    val attachments: Array<Attachment>?,
+)
+
+data class Comment(
+    val id: Int = 0,
+    val fromId: Int = 0,
+    val date: Int = 0,
+    val text: String?,
 )
 
 data class Likes(
@@ -78,7 +85,19 @@ class DocumentAttachment(val document: Document) : Attachment("doc")
 object WallService {
 
     private var posts = emptyArray<Post>()
+    private var comments = emptyArray<Comment>()
     private var nextId = 1
+    private var commentId = 1
+
+    fun createComment(postId: Int , comment: Comment) : Comment {
+        val post = posts.find { it.postId == postId }
+        if (post == null) {
+            throw PostNotFoundException("Пост с ид $postId не существует!")
+        }
+        val newComment = comment.copy(id = commentId++)
+        comments += newComment
+        return newComment
+    }
 
     fun add(post: Post): Post {
         val newPost = post.copy(postId = nextId++)
@@ -101,3 +120,5 @@ object WallService {
         nextId = 1
     }
 }
+
+class PostNotFoundException(message : String) : RuntimeException(message)

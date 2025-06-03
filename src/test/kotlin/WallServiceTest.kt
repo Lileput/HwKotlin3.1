@@ -1,4 +1,6 @@
+import netology.Comment
 import netology.Post
+import netology.PostNotFoundException
 import netology.WallService
 import org.junit.Assert.assertNotEquals
 import org.junit.Before
@@ -50,5 +52,43 @@ class WallServiceTest {
         val result = service.update(post)
 
         assertEquals(false, result)
+    }
+
+    @Test
+    fun addCommentIsTrue() {
+        val post1 =
+            Post(
+                ownerId = 1,
+                fromId = 1,
+                date = 13052025,
+                text = "Second post",
+                postType = "post",
+                attachments = null
+            )
+        val service = WallService
+        service.add(post1)
+        val comment1 = Comment(0, 20, 1, "Первый коммент")
+        val addedComment = service.createComment(1, comment1)
+
+        assertEquals(1, addedComment.id)
+        assertEquals("Первый коммент", addedComment.text)
+    }
+
+    @Test(expected = PostNotFoundException::class)
+    fun addCommentIsException() {
+        val post1 =
+            Post(
+                ownerId = 1,
+                fromId = 1,
+                date = 13052025,
+                text = "Second post",
+                postType = "post",
+                attachments = null
+            )
+        val service = WallService
+        service.add(post1)
+        val comment1 = Comment(0, 20, 1, "Первый коммент")
+        val addedComment = service.createComment(20, comment1)
+
     }
 }
